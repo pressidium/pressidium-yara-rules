@@ -8,7 +8,7 @@ GitHub: https://github.com/pressidium/pressidium-yara-rules
 
 
 
-rule WordPress_WebShell_Detection
+rule common_PHP_functions
 {
     meta:
         description = "Detects common PHP functions and strings used in WordPress web shells"
@@ -39,7 +39,7 @@ rule WordPress_WebShell_Detection
 }
 
 
-rule WordPress_WebShell_Detection_Base64
+rule common_PHP_functions_base64_encoded
 {
     meta:
         description = "Detects common PHP functions and strings used in WordPress web shells (Base64-encoded)"

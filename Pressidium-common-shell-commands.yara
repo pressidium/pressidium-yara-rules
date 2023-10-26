@@ -7,7 +7,7 @@ GitHub: https://github.com/pressidium/pressidium-yara-rules
 /* ------------------------------ Rule Set ------------------------------ */
 
 
-rule common-unix-commands
+rule common_unix_commands
 {
     meta:
         description = "Detects common unix commands used in webshells"
@@ -39,7 +39,7 @@ rule common-unix-commands
         any of them
 }
 
-rule common-uxin-commands-base64
+rule common_uxin_commands_base64
 {
     meta:
         description = "Detects common unix commands used in webshells encoded in base64"
