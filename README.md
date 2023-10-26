@@ -1,6 +1,6 @@
 # 🕵️ Pressidium Yara Rules
 
-Welcome to the Pressidium Yara Rules repository. Here lies a curated set of Yara rules specialized in identifying and warding off WordPress or PHP malware and infections, ensuring a safer harbor for your digital ventures.
+Welcome to the Pressidium Yara Rules repository. This section contains a carefully chosen collection of Yara rules that are specifically designed to detect and prevent WordPress or PHP malware and viruses, ensuring a safer place for online lifes. 
 
 ## Table of Contents
 
@@ -14,7 +14,6 @@ Welcome to the Pressidium Yara Rules repository. Here lies a curated set of Yara
 - 🔍 **Highly Descriptive**: Each rule comes with a set of descriptive comments that unravel the logic behind, aiding in a deeper understanding and quicker threat analysis.
 - 🔄 **Regularly Updated**: With the digital realm constantly morphing, our rules are regularly updated to stay ahead of the malicious curve.
 - 🤝 **Community-Driven**: We believe in the power of community. Contributions are welcome to keep the rule set robust, diverse, and in tune with the latest threat landscape.
-- 📜 **Well Documented**: Dive into our comprehensive documentation to understand, deploy, and even craft your own Yara rules.
 
 ## Credits
 
