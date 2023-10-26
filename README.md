@@ -12,7 +12,6 @@ Welcome to the Pressidium Yara Rules repository. This section contains a careful
 
 - 🛡️ **Specialized Rule Set**: Focused on detecting WordPress and PHP malware, our rules are honed to pinpoint and mitigate digital threats targeting these platforms.
 - 🔍 **Highly Descriptive**: Each rule comes with a set of descriptive comments that unravel the logic behind, aiding in a deeper understanding and quicker threat analysis.
-- 🔄 **Regularly Updated**: With the digital realm constantly morphing, our rules are regularly updated to stay ahead of the malicious curve.
 - 🤝 **Community-Driven**: We believe in the power of community. Contributions are welcome to keep the rule set robust, diverse, and in tune with the latest threat landscape.
 
 ## Credits
