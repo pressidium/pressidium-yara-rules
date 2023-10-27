@@ -1,6 +1,6 @@
 # 🕵️ Pressidium Yara Rules
 
-Welcome to the Pressidium® Yara Rules repository. This section contains a carefully curated collection of Yara rules specifically designed to detect and prevent WordPress or PHP malware and viruses, ensuring a safer online environment. 
+Welcome to the Pressidium® Yara Rules repository. This section contains a carefully curated collection of Yara rules specifically designed to detect WordPress or PHP malware and viruses, ensuring a safer online environment. 
 
 This is a Yara Rules repository curated by Pressidium®. Pressidium offers Managed WordPress hosting for web professionals designed to optimize the performance, security, and scalability of WordPress websites. With a strong emphasis on reliability, Pressidium utilizes high-available architecture to ensure your website's uptime.
 
