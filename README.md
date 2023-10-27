@@ -12,7 +12,7 @@ Pressidium® offers Managed WordPress hosting for web professionals designed to 
 
 ## Features
 
-- 🛡️ **Specialized Rule Set**: Focused on detecting WordPress and PHP malware, our rules are finely tuned to identify and mitigate digital threats targeting these platforms
+- 🛡️ **Specialized Rule Set**: Focused on detecting WordPress and PHP malware, our rules are fine-tuned to identify and mitigate digital threats targeting these platforms
 - 🔍 **Highly Descriptive**: Each rule comes with a set of descriptive comments that unravel the logic behind it, aiding in a deeper understanding and quicker threat analysis.
 - 🤝 **Community-Driven**: We believe in the power of community. Contributions are welcome to keep the rule set robust, diverse, and in tune with the latest threat landscape.
 
