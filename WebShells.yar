@@ -8,57 +8,52 @@ GitHub: https://github.com/pressidium/pressidium-yara-rules
 /* 
 This rules set detects specific malicious PHP code snippets that found in some wordpress sites hosted in Pressidium.
 */
+/*For ease of use we add a comment in our includes with all the rulenames*/
+include "Pressidium-commons-init.yar"
 
 rule malicious_PHP_code_snippet1
 {
     meta:
-        description = "Detects a specific malicious PHP code snippet"
         author = "Spyros Maris"
+        description = "Detects a specific malicious PHP code snippet"
         reference = "https://github.com/pressidium/pressidium-yara-rules"
         date = "26/10/2023"
     strings:
         $info_leak = /echo\s+php_uname\(\)\s*\.\s*"<br>"\s*\.\s*getcwd\(\)\s*\.\s*"<br>";/ wide ascii
         $file_upload = /<form method='POST' enctype='multipart\/form-data'><input type='file' name='file' \/><input type='submit' value='UPload' \/><\/form>/ wide ascii
         $move_uploaded_file = "move_uploaded_file(" wide ascii
-        $remote_code_execution = /eval\(\s*\$php\s*\);/ wide ascii
         $curl_function = /function curl\(\s*\$url\s*\)\s*\{/ wide ascii
     condition:
-        3 of them 
+        any of them and Pressidium_Commons
 }
 
 rule malicious_PHP_code_snippet2
 {
     meta:
-        description = "Detects a specific malicious PHP code snippet"
         author = "Spyros Maris"
-        date = "26/10/2023" 
+        description = "Detects a specific malicious PHP code snippet"
+        reference = "https://github.com/pressidium/pressidium-yara-rules"
+        date = "26/10/2023"
     strings:
         $func_def = "if (!function_exists('explode'))" ascii
-        $eval_func = "eval(CRgwR()" ascii
-        $error_reporting = "error_reporting(0);" ascii
         $function_crgwr = "function Crgwr()" ascii
         $unlink_func = "unlink(__FILE__);" ascii
         $uniq_string = "I could not have a more welcome visitor 64 group of zain bani" ascii 
     condition:
-        2 of them
+        any of them and Pressidium_Commons
 }
 
-rule malicious_PHP_code_snippet3
+rule Obfuscated_malicious_PHP_code_snippet1
 {
     meta:
-        description = "Detects a specific malicious PHP code snippet"
         author = "Spyros Maris"
+        description = "Detects a specific obfuscated malicious PHP code snippet"
+        reference = "https://github.com/pressidium/pressidium-yara-rules"
         date = "26/10/2023"
     strings:
-        strings:
-        $obfuscation1 = "gzinflate" ascii
-        $obfuscation2 = "base64_decode" ascii
-        $obfuscation3 = "eval" ascii
         $suspicious_function1 = "lIrHtGzZuKk" ascii
         $suspicious_function2 = "ofBzgiUxK" ascii
         $encoded_string = "UGRyT21YcFJ0TUZ1cUxvSWilGGlzm8jyB7jK/2HMqgJUMMi2nN3Yxo5WxkeVbPkhlGs3RSEYIfIQUBzr4yW//fUMIA1" ascii    
     condition:
-        1 of ($obfuscation*) and
-        1 of ($suspicious_function*) and
-        $encoded_string
+        any of them and Pressidium_Commons
 }

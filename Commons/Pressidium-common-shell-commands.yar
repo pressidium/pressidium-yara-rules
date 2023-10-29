@@ -10,7 +10,7 @@ GitHub: https://github.com/pressidium/pressidium-yara-rules
 rule common_unix_commands
 {
     meta:
-        description = "Detects common unix commands used in webshells"
+        description = "This rule detects common unix commands that are used by attackers to perform malicious actions."
         author = "Spyros Maris"
         reference = "https://github.com/pressidium/pressidium-yara-rules"
         date = "26/10/2023"
@@ -42,7 +42,7 @@ rule common_unix_commands
 rule common_uxin_commands_base64
 {
     meta:
-        description = "Detects common unix commands used in webshells encoded in base64"
+        description = "This rule detects common unix commands used in webshells encoded in base64"
         author = "Spyros Maris"
         reference = "https://github.com/pressidium/pressidium-yara-rules"
         date = "26/10/2023"

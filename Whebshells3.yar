@@ -8,29 +8,9 @@ GitHub: https://github.com/pressidium/pressidium-yara-rules
 /* 
 This rules set detects specific malicious PHP code snippets that found in some wordpress sites hosted in Pressidium.
 */
+include "Pressidium-commons-init.yar"
 
 rule malicious_PHP_code_snippet6
-{
-    meta:
-        author = "Spyros Maris"
-        date = "27/10/2023"
-        description = "This rule detects specific malicious PHP code snippets that found in some wordpress sites hosted in Pressidium."
-        reference = "https://github.com/pressidium/pressidium-yara-rules"
-    strings:
-        $base64_decode_function = "ba" . "se" . "64" . "_d" . "ecode" ascii wide nocase
-        $string_reverse_function = "s" . "t" . "rrev" ascii wide nocase
-        $string_rot13_function = "s" . "tr" . "_ro" . "t13" ascii wide nocase
-        $gzip_inflate_function = "gzin" . "flat" . "e" ascii wide nocase
-        $usage_of_eval = "eval" ascii wide nocase
-        $disable_logging1 = "error_reporting(0);" ascii wide nocase
-        $disable_logging2 = "ini_set('log_errors', 0);" ascii wide nocase
-        $disable_logging3 = "ni_set('error_log', NULL);" ascii wide nocase
-        $call_a_function = "ob_start();" ascii wide nocase
-    condition:
-        1 of them
-}
-
-rule malicious_PHP_code_snippet7
 {
     meta:
         author = "Spyros Maris"
@@ -47,10 +27,10 @@ rule malicious_PHP_code_snippet7
         $obfuscated_string5 = "$O_0OO_O_00" ascii wide nocase
         $obfuscated_string6 = /(\[\d+\]\.)*\[\d+\]/ /* This regex pattern matches a sequence of array accesses and concatenations, e.g., $array[0].$array[1].$array[2] */
     condition:
-        2 of them
+        any of them and Pressidium_Commons
 }
 
-rule malicious_PHP_code_snippet8
+rule malicious_PHP_code_snippet7
 {
     meta:
         author = "Spyros Maris"
@@ -62,17 +42,16 @@ rule malicious_PHP_code_snippet8
         $concat_pattern1 = {38 24 30 30 30 4F 4F 5F 30 5F 4F 5F 7B 33 38 7D 2E 24 30 30 30 4F 4F 5F 30 5F 4F 5F 7B 31 32 7D} // $O00OO_0_O_=$O00OO_0_O_{38}.$O00OO_0_O_{12}
         $concat_pattern2 = {24 4F 30 30 4F 4F 5F 30 5F 4F 5F 7B 33 32 7D 2E 24 4F 30 30 4F 4F 5F 30 5F 4F 5F 7B 32 34 7D} // $O0O0O0_0_O_=$O00OO_0_O_{32}.$O00OO_0_O_{24}
         $regex_pattern = /(\[\d+\]\.)*\[\d+\]/ /* This regex pattern matches a sequence of array accesses and concatenations, e.g., $array[0].$array[1].$array[2] */
-        $eval_pattern = "__GLOBALS" ascii wide nocase
+        $globalvar = "__GLOBALS" ascii wide nocase
         $curlopt_pattern = "CURLOPT" ascii wide nocase
         $isset_pattern = "isset" ascii wide nocase
         $request_pattern = "_REQUEST" ascii wide nocase
         $server_pattern = "_SERVER" ascii wide nocase
-
     condition:
-        2 of them
+        any of them and Pressidium_Commons
 }
 
-rule malicious_PHP_code_snippet9
+rule malicious_PHP_code_snippet8
 {
     meta:
         author = "Spyros Maris"
@@ -83,15 +62,9 @@ rule malicious_PHP_code_snippet9
         $password_assignment = "DSCRXtbVQAp" ascii wide nocase
         $leaf_version = "2.8" ascii wide nocase
         $leaf_website = "leafmailer.pw" ascii wide nocase
-        $session_start = "session_start();" ascii wide nocase
-        $error_reporting = "error_reporting(0);" ascii wide nocase
-        $set_time_limit = "set_time_limit(0);" ascii wide nocase
-        $memory_limit = "ini_set(\"memory_limit\",-1);" ascii wide nocase
-        $session_md5 = "md5(__FILE__)" ascii wide nocase
         $session_code_check = "$_SESSION[$sessioncode]" ascii wide nocase
         $request_pass_check = "isset($_REQUEST['pass'])" ascii wide nocase
         $password_check = "and $_REQUEST['pass'] == $password" ascii wide nocase
-
     condition:
-        3 of them
+        any of them and Pressidium_Commons
 }

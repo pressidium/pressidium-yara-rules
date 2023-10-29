@@ -10,7 +10,7 @@ GitHub: https://github.com/pressidium/pressidium-yara-rules
 rule Detect_Eval_Usage
 {
     meta:  // Meta section for rule metadata
-        description = "Detects usage of eval() including obfuscated instances"
+        description = "This rule detects the usage of eval() function in different variations and encodings"
         author = "Spyros Maris"
         reference = "https://github.com/pressidium/pressidium-yara-rules"
         date = "26/10/2023"
@@ -23,6 +23,10 @@ rule Detect_Eval_Usage
         $eval6 = "lave(" wide ascii // Reversed eval
         $eval7 = /base64_decode\s*\(\s*['"][^'"]+['"]\s*\)\s*\)/ wide ascii // Encoding/decoding before eval
         $eval8 = "assert(" wide ascii // Assertion obfuscation
+        $remote_code_execution = /eval\(\s*\$php\s*\);/ wide ascii
+        $eval_CRgwR = "eval(CRgwR()" ascii
+        $eval_function = /@?eval\(\w+\(\w+\['\w+'\]\)\);/ wide ascii
+        $eval_function2 = /eval\s*\(\s*\$[a-zA-Z_]\w*\s*\[\d+\]\s*\(.*\)\s*\);/ wide ascii
     condition:  
         any of them  
 }

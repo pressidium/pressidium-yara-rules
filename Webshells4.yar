@@ -8,8 +8,9 @@ GitHub: https://github.com/pressidium/pressidium-yara-rules
 /* 
 This rules set detects specific malicious PHP code snippets that found in some wordpress sites hosted in Pressidium.
 */
+include "Pressidium-commons-init.yar"
 
-rule malicious_PHP_code_snippet10
+rule malicious_PHP_code_snippet1
 {
     meta:
         author = "Spyros Maris"
@@ -21,18 +22,15 @@ rule malicious_PHP_code_snippet10
         $leaf_version_assignment = "['version']=" ascii wide nocase
         $leaf_website_assignment = "['website']=" ascii wide nocase
         $session_start = "session_start();" ascii wide nocase
-        $error_reporting = "error_reporting(0);" ascii wide nocase
-        $set_time_limit = "set_time_limit(0);" ascii wide nocase
-        $memory_limit = "ini_set(\"memory_limit\",-1);" ascii wide nocase
         $session_md5 = "md5(__FILE__)" ascii wide nocase
         $session_code_check = "$_SESSION[" ascii wide nocase
         $request_pass_check = "isset($_REQUEST['pass'])" ascii wide nocase
 
     condition:
-        3 of them
+        any of them and Pressidium_Commons
 }
 
-rule malicious_PHP_snippet11
+rule Obfuscated_PHP_code_snippet2
 {
     meta:
         author = "Spyros Maris"
@@ -40,20 +38,16 @@ rule malicious_PHP_snippet11
         description = "This rule detects specific malicious PHP code snippets that found in some wordpress sites hosted in Pressidium"
         reference = "https://github.com/pressidium/pressidium-yara-rules"
     strings:
-        $string1 = "rawurldecode" ascii wide nocase
-        $string2 = "str_rot13" ascii wide nocase
-        $string3 = "file_put_contents" ascii wide nocase
-        $string4 = "base64_decode" ascii wide nocase
         $string5 = "28c754cd-7e52-42c6-9c21-792cd3873e65" ascii wide nocase
         $string6 = "2343d8d3-1d44-49e7-a1f6-455c2badd978" ascii wide nocase
         $string7 = "<?=123*4;echo `$_GET[0]`; ?>" ascii wide nocase
         $chr_pattern = /chr\(\d+(-\d+)?\)/ ascii wide nocase
         $hex_pattern = /\\x[0-9A-Fa-f]{2}/ ascii wide nocase
     condition:
-        any of them
+        any of them and Pressidium_Commons
 }
 
-rule malicious_PHP_snippet12
+rule Obfuscated_malicous_PHP_code_snippet1
 {
     meta:
         author = "Spyros Maris"
@@ -69,75 +63,36 @@ rule malicious_PHP_snippet12
         $hex_string2 = /\x5c\x78[0-9a-fA-F]{2}/
         $chr_function = /chr\s*\(\s*\d+\s*-\s*\d+\s*\)/
         $string_concat = /"\x73".*?"\x72".*?chr/
-        $eval_function = /eval\s*\(\s*\$[a-zA-Z_]\w*\s*\[\d+\]\s*\(.*\)\s*\);/
         $array_merge_pattern = /foreach\s*\(.*Array\(.*\$_POST,.*\$_COOKIE,.*\)\s*as\s*\$[a-zA-Z_]\w*\)/
-        $include_string = /@include\s*\("\S+"\);/
+        $malicious_package = "@package AKWH9WV2" ascii wide nocase
+        $string_concat2 = /'\w+'.'\w+'.'\w+'.'\w+'/
+        $array_merge_pattern2 = /array_merge\(\$_GET, \$_COOKIE, \$_POST\);/
     condition:
-        1 of them
+       	any of them and Pressidium_Commons
+
 }
 
-rule malicious_PHP_snippet13
+
+rule DrunkShell_webshell_detection
 {
     meta:
         author = "Spyros Maris"
         date = "27/10/2023"
-        description = "This rule detects specific malicious PHP code snippets that found in some wordpress sites hosted in Pressidium"
+        description = "This rule detects DrunkShell webshell"
         reference = "https://github.com/pressidium/pressidium-yara-rules"
     strings:
-        $string_concat = /'\w+'.'\w+'.'\w+'.'\w+'/
-        $array_merge_pattern = /array_merge\(\$_GET, \$_COOKIE, \$_POST\);/
-        $eval_function = /@?eval\(\w+\(\w+\['\w+'\]\)\);/
-        $file_operation_functions = /'f'.'\w+'.'\w+'/
-        $md5_check = /if\(md5\(\w+\['\w+'\]\)===/
-        $base64_decode_pattern = /'ba'.'se'.chr\(54\).chr\(64\).chr\(95\).chr\(100\).chr\(101\).chr\(99\)./
-        $include_pattern = /include\(\w+\(\w+\)\['uri'\]\);/
-    condition:
-        2 of them
-}
-
-
-rule malicious_PHP_snippet14
-{
-    meta:
-        author = "Spyros Maris"
-        date = "27/10/2023"
-        description = "This rule detects specific malicious PHP code snippets that found in some wordpress sites hosted in Pressidium"
-        reference = "https://github.com/pressidium/pressidium-yara-rules"
-    strings:
-        $header = "DrunkShell v 1.0.0" ascii wide nocase
+        $fileheader = "DrunkShell v 1.0.0" ascii wide nocase
         $pattern1 = /\$[A-Za-z0-9_]+\s*=\s*\$ABC\[\d+\]\.\$ABC\[\d+\];/ // This regex pattern searches for a sequence where a variable is being assigned a value formed by accessing and concatenating elements from an array named $ABC. 
         $php_session1 = /\$_SESSION\["mysql"\]/
         $php_session2 = /\["(\?:server|username|pwd|database)"\]/
-
-        $mysqli_conn = /new mysqli\(.+?\);/
-        $disable_error_reporting1 = /error_reporting\(0\);/
-        $disable_error_reporting2 = /ini_set\("display_errors", FALSE\);/
-        $disable_error_reporting3 = /ini_set\("log_errors", 0  \);/
-        $disable_error_reporting4 = /ini_set\("error_log", NULL\);/
-        $header1 = /header\("X-XSS-Protection: 0"\);/
+        $mysqli_conn = /new mysqli\(.+?\);/        
         $authvar = "$auth = " ascii wide nocase
         $string = "DRUNK SHELL BETA" ascii wide nocase
         $string2 = "s4ndal.py" ascii wide nocase
-
-    condition:
-        2 of them
-}
-
-rule malicious_PHP_snippet15
-{
-    meta:
-        author = "Spyros Maris"
-        date = "27/10/2023"
-        description = "This rule detects specific malicious PHP code snippets that found in some wordpress sites hosted in Pressidium"
-        reference = "https://github.com/pressidium/pressidium-yara-rules"
-    strings:
-        $string_concat = /"b"."a"."se6"."4_"."d"."ec"."od"."e"/
-        $chr_function = /chr\(\d+\)/
-        $eval_function = /eval\(\w+\(\w+\['\w+'\]\)\);/
-        $md5_function = /md5\(\w+\['\w+'\]\)/
         $base64_encoded_string = /ZmQ"."0"."NWR"."jZ"."GI0NGF"."iODVi"."Yj"."M2N"."WVmY"."TE4Zj"."Q4MTM3OGQ=/
     condition:
-        2 of them
+        any of them and Pressidium_Commons
 }
+
 
 

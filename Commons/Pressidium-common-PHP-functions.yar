@@ -16,9 +16,6 @@ rule common_PHP_functions
         reference = "https://github.com/pressidium/pressidium-yara-rules"
         date = "26/10/2023"
     strings:
-        $base64_decode = "base64_decode(" wide ascii
-        $str_rot13 = "str_rot13(" wide ascii
-        $gzinflate = "gzinflate(" wide ascii
         $file_get_contents = "file_get_contents(" wide ascii
         $shell_exec = "shell_exec(" wide ascii
         $exec = "exec(" wide ascii
@@ -34,8 +31,28 @@ rule common_PHP_functions
         $upload_dir = "wp_upload_dir(" wide ascii
         $current_user = "wp_get_current_user(" wide ascii
         $update_option = "update_option(" wide ascii
+        $curl_exec = "curl_exec(" wide ascii
+        $curl_setopt = "curl_setopt(" wide ascii
+        $ob_start = "ob_start(" wide ascii
+        $unserialize = "unserialize(" wide ascii
+        $ini_set = "ini_set(" wide ascii
+        $file_put_contents = "file_put_contents(" wide ascii
+        $fopen = "fopen(" wide ascii
+        $fwrite = "fwrite(" wide ascii
+        $fclose = "fclose(" wide ascii
+        $fsockopen = "fsockopen(" wide ascii
+        $fread = "fread(" wide ascii
+        $fgets = "fgets(" wide ascii
+        $fputs = "fputs(" wide ascii
+        $ftruncate = "ftruncate(" wide ascii
+        $unlink = "unlink(" wide ascii
+        $set_time_limit = "set_time_limit(" wide ascii
+        $md5 = "md5(" wide ascii
+        $rawurldecode = "rawurldecode(" wide ascii
+        $chr = "chr(" wide ascii
+        $session_start = "session_start(" wide ascii
     condition:
-        3 of them 
+        any of them 
 }
 
 
@@ -63,6 +80,26 @@ rule common_PHP_functions_base64_encoded
         $upload_dir = "d3BfdXBsb2FkX2Rpcig=" base64
         $current_user = "d3BfZ2V0X2N1cnJlbnRfdXNlcig=" base64
         $update_option = "dXBkYXRlX29wdGlvbig=" base64
+        $curl_exec = "Y3VybF9leGVjKA==" base64
+        $curl_setopt = "Y3VybF9zZXRvcHQK" base64
+        $ob_start = "b2Jfc3RhcnQo" base64
+        $unserialize = "dW5zZXJpYWxpemUo" base64
+        $ini_set = "aW5pX3NldCg=" base64
+        $file_put_contents = "ZmlsZV9wdXRfY29udGVudHMo" base64
+        $fopen = "ZmlsZV9mb3JtYXQo" base64
+        $fwrite = "ZmlsZV93cml0ZSg=" base64
+        $fclose = "ZmlsZV9jbG9zZSg=" base64
+        $fsockopen = "ZmlsZV9zb2NrZXQo" base64
+        $fread = "ZmlsZV9yZWFkKA==" base64
+        $fgets = "ZmlsZV9nZXRzKA==" base64
+        $fputs = "ZmlsZV9wdXRzKA==" base64
+        $ftruncate = "ZmlsZV90cnVuY3R1cmUo" base64
+        $unlink = "ZmlsZV91bmxpbms=" base64
+        $set_time_limit = "c2V0X3RpbWVfbGltaXQo" base64
+        $md5 = "bWQ1KCk=" base64
+        $rawurldecode = "cmF3dXJsZGVjb2RlKA==" base64
+        $chr = "Y2hyKA==" base64
+        $session_start = "c2Vzc2lvbl9zdGFydCg=" base64
     condition:
-        3 of them 
+        any of them 
 }
