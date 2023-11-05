@@ -16,43 +16,60 @@ rule common_PHP_functions
         reference = "https://github.com/pressidium/pressidium-yara-rules"
         date = "26/10/2023"
     strings:
-        $file_get_contents = "file_get_contents(" wide ascii
-        $shell_exec = "shell_exec(" wide ascii
-        $exec = "exec(" wide ascii
-        $passthru = "passthru(" wide ascii
-        $system = "system(" wide ascii
-        $proc_open = "proc_open(" wide ascii
-        $assert = "assert(" wide ascii
-        $create_function = "create_function(" wide ascii
+        $file_get_contents = "file_get_contents" wide ascii
+        $shell_exec = "shell_exec" wide ascii
+        $exec = "exec" wide ascii
+        $passthru = "passthru" wide ascii
+        $system = "system" wide ascii
+        $proc_open = "proc_open" wide ascii
+        $assert = "assert" wide ascii
+        $create_function = "create_function" wide ascii
         $preg_replace = /preg_replace\s*\(\s*["']\/\.\*\/e["']\s*,/ wide ascii // preg_replace with /e modifier is often used for code execution
-        $move_uploaded_file = "move_uploaded_file(" wide ascii
-        $wp_nonce_field = "wp_nonce_field(" wide ascii
-        $wp_verify_nonce = "wp_verify_nonce(" wide ascii
-        $upload_dir = "wp_upload_dir(" wide ascii
-        $current_user = "wp_get_current_user(" wide ascii
-        $update_option = "update_option(" wide ascii
-        $curl_exec = "curl_exec(" wide ascii
-        $curl_setopt = "curl_setopt(" wide ascii
-        $ob_start = "ob_start(" wide ascii
-        $unserialize = "unserialize(" wide ascii
-        $ini_set = "ini_set(" wide ascii
-        $file_put_contents = "file_put_contents(" wide ascii
-        $fopen = "fopen(" wide ascii
-        $fwrite = "fwrite(" wide ascii
-        $fclose = "fclose(" wide ascii
-        $fsockopen = "fsockopen(" wide ascii
-        $fread = "fread(" wide ascii
-        $fgets = "fgets(" wide ascii
-        $fputs = "fputs(" wide ascii
-        $ftruncate = "ftruncate(" wide ascii
-        $unlink = "unlink(" wide ascii
-        $set_time_limit = "set_time_limit(" wide ascii
-        $md5 = "md5(" wide ascii
-        $rawurldecode = "rawurldecode(" wide ascii
-        $chr = "chr(" wide ascii
-        $session_start = "session_start(" wide ascii
+        $move_uploaded_file = "move_uploaded_file" wide ascii
+        $wp_nonce_field = "wp_nonce_field" wide ascii
+        $wp_verify_nonce = "wp_verify_nonce" wide ascii
+        $upload_dir = "wp_upload_dir" wide ascii
+        $current_user = "wp_get_current_user" wide ascii
+        $update_option = "update_option" wide ascii
+        $curl_exec = "curl_exec" wide ascii
+        $curl_setopt = "curl_setopt" wide ascii
+        $ob_start = "ob_start" wide ascii
+        $unserialize = "unserialize" wide ascii
+        $ini_set = "ini_set" wide ascii
+        $file_put_contents = "file_put_contents" wide ascii
+        $fopen = "fopen" wide ascii
+        $fwrite = "fwrite" wide ascii
+        $fclose = "fclose" wide ascii
+        $fsockopen = "fsockopen" wide ascii
+        $fread = "fread" wide ascii
+        $fgets = "fgets" wide ascii
+        $fputs = "fputs" wide ascii
+        $ftruncate = "ftruncate" wide ascii
+        $unlink = "unlink" wide ascii
+        $set_time_limit = "set_time_limit" wide ascii
+        $md5 = "md5" wide ascii
+        $rawurldecode = "rawurldecode" wide ascii
+        $chr = "chr" wide ascii
+        $session_start = "session_start" wide ascii
+		$getallheaders = "getallheaders" wide ascii
+		$isset = "isset" wide ascii
+		$gettype = "gettype" wide ascii
+		$inarray = "in_array" wide ascii
+		$count = "count" wide ascii
+		$explode = "explode" wide ascii
+		$strpos = "strpos" wide ascii
+		$empty = "empty" wide ascii
+		$Array = "Array" wide ascii
+		$foreach = "foreach" wide ascii
+		$die = "die" wide ascii
+		$str_pad = "str_pad" wide ascii
+		$strlen = "strlen" wide ascii
+		$array_push = "array_push" wide ascii
+		$is_writable = "is_writable" wide ascii
+		$is_dir = "is_dir" wide ascii
+		$scandir = "scandir" wide ascii
     condition:
-        any of them 
+        3 of them 
 }
 
 
@@ -100,6 +117,23 @@ rule common_PHP_functions_base64_encoded
         $rawurldecode = "cmF3dXJsZGVjb2RlKA==" base64
         $chr = "Y2hyKA==" base64
         $session_start = "c2Vzc2lvbl9zdGFydCg=" base64
+		$getallheaders = "Z2V0YWxsZGVhZGVycygp" base64
+		$isset = "aXNzZXQo" base64
+		$gettype = "Z2V0dHlwZSgp" base64
+		$inarray = "aW5fYXJyYXko" base64
+		$count = "Y291bnQo" base64
+		$explode = "ZXhwbG9kZSgp" base64
+		$strpos = "c3RybXBsb2FkKCk=" base64
+		$empty = "ZW1wdHko" base64
+		$Array = "QXJyYXk=" base64
+		$foreach = "Zm9yZXRjaCgp" base64
+		$die = "ZGllKCk=" base64
+		$str_pad = "c3RyX3BhZCgp" base64
+		$strlen = "c3RyX2xlbmd0aCgp" base64
+		$array_push = "YXJyYXlfcHVzaCgp" base64
+		$is_writable = "aXNfd3JpdGFiZWwo" base64
+		$is_dir = "aXNfZGlyKCk=" base64
+		$scandir = "c2NhbmRpcig=" base64
     condition:
-        any of them 
+        3 of them 
 }

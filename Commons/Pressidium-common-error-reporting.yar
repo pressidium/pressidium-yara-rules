@@ -22,5 +22,5 @@ rule common_disable_error_reporting
         $error_reporting7 = "ini_set('display_errors','Off');" wide ascii
         $error_reporting8 = "ini_set('display_errors', FALSE);" wide ascii
     condition:
-        any of them
+        1 of them
 }

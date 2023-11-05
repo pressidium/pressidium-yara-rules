@@ -36,7 +36,7 @@ rule common_unix_commands
         $cmd19 = "vi"
         $cmd20 = "mv"
     condition:
-        any of them
+        1 of them
 }
 
 rule common_uxin_commands_base64
@@ -68,5 +68,5 @@ rule common_uxin_commands_base64
         $vi = "dmk=" base64
         $mv = "bXY=" base64
     condition:
-        any of them
+        1 of them
 }

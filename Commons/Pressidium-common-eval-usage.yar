@@ -27,6 +27,7 @@ rule Detect_Eval_Usage
         $eval_CRgwR = "eval(CRgwR()" ascii
         $eval_function = /@?eval\(\w+\(\w+\['\w+'\]\)\);/ wide ascii
         $eval_function2 = /eval\s*\(\s*\$[a-zA-Z_]\w*\s*\[\d+\]\s*\(.*\)\s*\);/ wide ascii
+		$eval9 = "eVAL(\"?>\".$b($a))" wide ascii 
     condition:  
-        any of them  
+        1 of them  
 }

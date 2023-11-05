@@ -7,7 +7,7 @@ GitHub: https://github.com/pressidium/pressidium-yara-rules
 /* ------------------------------ Rule Set ------------------------------ */
 
 
-rule common_encoding_php 
+rule common_encoding_php
 {
     meta:
         author = "Spyros Maris"
@@ -19,7 +19,7 @@ rule common_encoding_php
         $gzinflate = "gzinflate"
         $str_rot13 = "str_rot13"
     condition:
-        any of them
+        2 of them and not ".js"
 }
 
 rule obfuscated_common_encodings_php
@@ -33,9 +33,9 @@ rule obfuscated_common_encodings_php
         $base64 = "YmFzZTY0X2RlY29kZQ=="
         $gzinflate = "Z3ppbmZsYXRl"
         $str_rot13 = "c3RyX3JvdDEz"
-        $base64_related = /b.*a.*se6.*4_.*d.*ec.*od.*e|ba.*se.*64.*_d.*ecode/ ascii wide nocase
-        $string_related = /s.*tr.*_.*r.*ot.*13|s.*tr.*_ro.*t13|s.*t.*rrev/ ascii wide nocase
-        $gzip_related = /g.*z.*in.*fl.*at.*e|gzin.*flat.*e/ ascii wide nocase
+        $base64_reg = /(b[._]a[._]se[._]6[._]4[._]d[._]ec[._]od[._]e|ba[._]se[._]64[._]_d[._]ecode)/ ascii wide nocase
+        $str_rot13_reg = /(s[._]tr[._]_r[._]ot[._]13|s[._]tr[._]_ro[._]t13|s[._]t[._]rrev)/ ascii wide nocase
+        $gzinflate_reg = /(g[._]z[._]in[._]fl[._]at[._]e|gzin[._]flat[._]e)/ ascii wide nocase
     condition:
-        any of them
+        1 of them
 }
